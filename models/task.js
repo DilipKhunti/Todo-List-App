@@ -6,10 +6,6 @@ const taskSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    uploader_id: {
-      type: String,
-      required: true,
-    },
     isCompleated: {
       type: Boolean,
       required: true,

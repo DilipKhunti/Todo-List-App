@@ -9,10 +9,11 @@ router.post("/add-task", authenticateToken, async (req, res) => {
 
     const task = new Task({
       title: req.body.title,
-      uploader_id: id,
     });
 
+    await User.findByIdAndUpdate(id, { $push: { tasks: task._id } });
     await task.save();
+
     res.status(200).json({ message: "task added successfully" });
   } catch (error) {
     console.log(error);
@@ -22,20 +23,7 @@ router.post("/add-task", authenticateToken, async (req, res) => {
 
 router.put("/mark-completed", authenticateToken, async (req, res) => {
   try {
-    const { id } = req.headers;
     const { taskid } = req.headers;
-
-    const task = await Task.findById(taskid);
-
-    if (!task) {
-      return res.status(404).json({ message: "Task not found" });
-    }
-
-    if (task.uploader_id !== id) {
-      return res
-        .status(403)
-        .json({ message: "You don't have permission to update this task" });
-    }
 
     await Task.findByIdAndUpdate(taskid, {
       isCompleated: true,
@@ -55,17 +43,7 @@ router.delete("/delete-task", authenticateToken, async (req, res) => {
     const { id } = req.headers;
     const { taskid } = req.headers;
 
-    const task = await Task.findById(taskid);
-
-    if (!task) {
-      return res.status(404).json({ message: "Task not found" });
-    }
-
-    if (task.uploader_id !== id) {
-      return res
-        .status(403)
-        .json({ message: "You don't have permission to delete this task" });
-    }
+    await User.findByIdAndUpdate(id, { $pull: { tasks: taskid } });
 
     await Task.findByIdAndDelete(taskid);
 
@@ -78,13 +56,13 @@ router.delete("/delete-task", authenticateToken, async (req, res) => {
   }
 });
 
-router.get("/get-uploaded-tasks", authenticateToken, async (req, res) => {
+router.get("/get-all-tasks", authenticateToken, async (req, res) => {
   try {
     const { id } = req.headers;
+    const userData = await User.findById(id).populate("tasks");
+    const tasks = userData.tasks;
 
-    const tasks = await Task.find({ uploader_id: id })
-
-    return res.status(200).json({
+    return res.json({
       status: "Success",
       data: tasks,
     });
