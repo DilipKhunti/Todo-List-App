@@ -19,7 +19,7 @@ const user = new mongoose.Schema(
     tasks: [
       {
         type: mongoose.Types.ObjectId,
-        ref: "books",
+        ref: "task",
       },
     ],
   },
