@@ -3,7 +3,7 @@ require("dotenv").config();
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { authenticateToken } = require("./userAuth");
+// const { authenticateToken } = require("./userAuth");
 
 //sign up
 router.post("/sign-up", async (req, res) => {
@@ -65,15 +65,11 @@ router.post("/sign-in", async (req, res) => {
 
     await bcrypt.compare(password, existingUser.password, (err, data) => {
       if (data) {
-        const authClaims = [
-          { name: existingUser.username },
-        ];
+        const authClaims = [{ name: existingUser.username }];
         const token = jwt.sign({ authClaims }, `${process.env.JWTKEY}`, {
           expiresIn: "30d",
         });
-        return res
-          .status(200)
-          .json({ id: existingUser.id, token: token });
+        return res.status(200).json({ id: existingUser.id, token: token });
       } else {
         return res.status(400).json({ message: "Invalid credentials" });
       }
@@ -83,3 +79,4 @@ router.post("/sign-in", async (req, res) => {
   }
 });
 
+module.exports = router;
