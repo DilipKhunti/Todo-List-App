@@ -14,7 +14,7 @@ router.post("/add-task", authenticateToken, async (req, res) => {
     await User.findByIdAndUpdate(id, { $push: { tasks: task._id } });
     await task.save();
 
-    res.status(200).json({ message: "task added successfully" });
+    res.status(200).json({ message: "task added successfully", data: task });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
@@ -26,7 +26,7 @@ router.put("/mark-completed", authenticateToken, async (req, res) => {
     const { taskid } = req.headers;
 
     await Task.findByIdAndUpdate(taskid, {
-      isCompleated: true,
+      isCompleted: req.body.mark,
     });
 
     return res.status(200).json({

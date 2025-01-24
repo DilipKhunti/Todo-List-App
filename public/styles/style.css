@@ -52,6 +52,14 @@ h1 {
   caret-color: var(--accent-color);
 }
 
+.user-auth form div {
+  margin-bottom: 25px;
+}
+
+#result-message {
+  display: none;
+}
+
 .user-auth .form-btm {
   display: flex;
   justify-content: space-between;
@@ -71,8 +79,8 @@ h1 {
   cursor: pointer;
 }
 
-.user-auth .form-btm a{
-    color: var(--accent-color);
+.user-auth .form-btm a {
+  color: var(--accent-color);
 }
 #todo-input {
   box-sizing: border-box;
@@ -176,7 +184,7 @@ input[type="checkbox"] {
     font-size: 15vw;
   }
 
-  .user-auth .form-btm{
+  .user-auth .form-btm {
     font-size: small;
   }
 }

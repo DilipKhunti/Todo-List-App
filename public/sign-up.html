@@ -6,23 +6,39 @@
     <title>Sign Up</title>
     <link rel="icon" type="image/png" href="./icons/logo.png" />
     <link rel="stylesheet" href="./styles/style.css" />
+    <script src="./scripts/config.js" defer></script>
     <script src="./scripts/sign-up.js" defer></script>
   </head>
   <body>
     <h1>Sign Up</h1>
     <div class="wrapper user-auth">
-      <form>
-        <input type="text" placeholder="Enter Username" autocomplete="off" />
-        <input type="text" placeholder="Enter Email Id" autocomplete="off" />
+      <form id="signup-form">
+        <input
+          type="text"
+          placeholder="Enter Username"
+          autocomplete="off"
+          id="username"
+          required
+        />
+        <input
+          type="email"
+          placeholder="Enter Email Id"
+          autocomplete="off"
+          id="email"
+          required
+        />
         <input
           type="password"
           placeholder="Enter Password"
           autocomplete="off"
+          id="password"
+          required
         />
         <div class="form-btm">
-          <button>Sign Up</button>
-          <p><a href="#">Already Have an Account ?</a></p>
+          <button type="submit" value="Sign Up">Sign Up</button>
+          <p><a href="./log-in.html">Already Have an Account ?</a></p>
         </div>
+        <div id="result-message">error message</div>
       </form>
     </div>
   </body>
