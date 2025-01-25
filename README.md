@@ -8,6 +8,10 @@ A simple and efficient task management app that allows you to add tasks, mark th
 - Delete tasks
 - Cross-device accessibility with login support
 
+## 🌐 Live Version
+
+Check out the live version of the website: https://todo-organized.vercel.app
+
 ## Installation
 
 ### Clone the Repository
