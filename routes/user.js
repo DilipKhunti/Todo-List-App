@@ -3,7 +3,7 @@ require("dotenv").config();
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-// const { authenticateToken } = require("./userAuth");
+const { authenticateToken } = require("./userAuth");
 
 //sign up
 router.post("/sign-up", async (req, res) => {
@@ -76,6 +76,25 @@ router.post("/sign-in", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.get("/get-user-info", authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.headers;
+
+    const user = await User.findById(id);
+
+    return res.json({
+      status: "Success",
+      data: {
+        username: user.username,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "An error occurred" });
   }
 });
 

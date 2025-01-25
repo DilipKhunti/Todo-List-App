@@ -8,6 +8,7 @@ const userId = localStorage.getItem("userId");
 let allTodos = [];
 
 async function main() {
+  displayUserInfo();
   allTodos = await getTodos();
   updateTodoList();
 }
@@ -16,6 +17,36 @@ todoForm.addEventListener("submit", function (e) {
   e.preventDefault();
   addTodo();
 });
+
+document.getElementById("log-out-btn").addEventListener("click", function (e) {
+  localStorage.removeItem("authToken");
+  localStorage.removeItem("userId");
+
+  window.location.href = "./log-in.html";
+});
+
+async function displayUserInfo() {
+  try {
+    const response = await fetch(`${config.API_BASE_URL}/get-user-info`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        id: `${localStorage.getItem("userId")}`,
+      },
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      document.getElementById("username").innerText = result.data.username;
+      document.getElementById("email").innerText = result.data.email;
+    } else {
+      console.log(result.message);
+      window.location.href = "./log-in.html";
+    }
+  } catch (error) {}
+}
 
 async function addTodo() {
   const todoText = todoInput.value.trim();
@@ -81,7 +112,6 @@ function createTodoItem(todo, todoIndex) {
 
   const checkbox = todoLI.querySelector("input");
   checkbox.addEventListener("change", () => {
-    allTodos[todoIndex].isCompleted = checkbox.checked;
     checkCompleted(todoIndex, checkbox.checked);
   });
 
@@ -101,19 +131,18 @@ async function deleteTodoItem(todoIndex) {
       },
     });
     const result = await response.json();
-    if (!response.ok) {
+    if (response.ok) {
+      allTodos = allTodos.filter((_, i) => i !== todoIndex);
+      updateTodoList();
+    } else {
       console.log(result);
     }
   } catch (error) {
     console.error("Error deleting task:", error);
   }
-
-  allTodos = allTodos.filter((_, i) => i !== todoIndex);
-  updateTodoList();
 }
 
 async function checkCompleted(todoIndex, checkValue) {
-  console.log(checkValue);
   try {
     const response = await fetch(`${config.API_BASE_URL}/mark-completed`, {
       method: "PUT",
@@ -128,7 +157,9 @@ async function checkCompleted(todoIndex, checkValue) {
 
     const result = await response.json();
 
-    if (!response.ok) {
+    if (response.ok) {
+      allTodos[todoIndex].isCompleted = checkValue;
+    } else {
       console.log(result);
     }
   } catch (error) {

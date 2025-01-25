@@ -39,6 +39,39 @@ h1 {
   gap: 10px;
 }
 
+.profile-info {
+  background-color: var(--primary-color);
+  border: 2px solid var(--secondary-color);
+  border-radius: 1000px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 25px;
+}
+.profile-info button {
+  background-color: var(--accent-color);
+  height: 56px;
+  padding: 0px 30px;
+  border: none;
+  border-radius: 1000px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--background);
+  cursor: pointer;
+}
+
+.profile-info .user-details {
+  height: 100%;
+}
+
+.profile-info .username {
+  color: var(--text-color);
+}
+.profile-info .email {
+  color: var(--text-color);
+  font-size: 10px;
+}
+
 .user-auth input {
   margin-bottom: 25px;
   box-sizing: border-box;
