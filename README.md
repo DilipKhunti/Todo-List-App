@@ -46,6 +46,40 @@ localhost:3000
 
 to see the website in action.
 
+## Directory structure
+```
+Directory structure:
+└── dilipkhunti-todo-list-app/
+    ├── README.md
+    ├── LICENSE
+    ├── app.js
+    ├── package.json
+    ├── vercel.json
+    ├── .env.example
+    ├── conn/
+    │   └── conn.js
+    ├── models/
+    │   ├── task.js
+    │   └── user.js
+    ├── public/
+    │   ├── index.html
+    │   ├── log-in.html
+    │   ├── sign-up.html
+    │   ├── icons/
+    │   ├── scripts/
+    │   │   ├── config.js
+    │   │   ├── index.js
+    │   │   ├── log-in.js
+    │   │   └── sign-up.js
+    │   └── styles/
+    │       └── style.css
+    └── routes/
+        ├── task.js
+        ├── user.js
+        └── userAuth.js
+
+```
+
 ## Contributing
 Feel free to contribute by submitting issues or pull requests to improve the app.
 
